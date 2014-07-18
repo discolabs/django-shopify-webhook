@@ -3,14 +3,20 @@ import json
 from django.test import TestCase
 from django.conf import settings
 from django.dispatch import receiver
+from django.core.urlresolvers import reverse
 
-from .signals import orders_create
-from .helpers import get_hmac
-
+from ..signals import orders_create
+from ..helpers import get_hmac
 
 class WebhookViewTestCase(TestCase):
 
-    def post_shopify_webhook(self, topic = None, data = {}, headers = {}, send_hmac = True):
+    def setUp(self):
+        self.webhook_url = reverse('webhook')
+
+    def post_shopify_webhook(self, topic = None, data = None, headers = None, send_hmac = True):
+        data = {} if data is None else data
+        headers = {} if headers is None else headers
+
         data = json.dumps(data)
 
         # Add common headers.
@@ -22,10 +28,10 @@ class WebhookViewTestCase(TestCase):
         if send_hmac:
             headers['HTTP_X_SHOPIFY_HMAC_SHA256'] = get_hmac(data, settings.SHOPIFY_APP_API_SECRET)
 
-        return self.client.post('/webhook/', data = data, content_type = 'application/json', **headers)
+        return self.client.post(self.webhook_url, data = data, content_type = 'application/json', **headers)
 
     def test_get_method_not_allowed(self):
-        response = self.client.get('/webhook/')
+        response = self.client.get(self.webhook_url)
         self.assertEqual(response.status_code, 405, 'GET request returns 405 (Method Not Allowed).')
 
     def test_empty_post_message_is_bad_request(self):
