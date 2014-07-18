@@ -12,7 +12,7 @@ settings.configure(
     INSTALLED_APPS = (
         'shopify_webhook',
     ),
-    SHOPIFY_APP_API_SECRET = 'a855c6ed4eabcdd2dbb6e069f3b40639'
+    SHOPIFY_APP_API_SECRET = 'hush'
 )
 
 from django.test.runner import DiscoverRunner
