@@ -9,7 +9,11 @@ class WebhookSignal(Signal):
         super(WebhookSignal, self).__init__(providing_args = providing_args)
 
 
-# Define all of our Webhook signals.
+# Define a generic webhook_received signal that triggers for all webhooks.
+webhook_received = WebhookSignal()
+
+
+# Define topic-specific signals.
 orders_create = WebhookSignal()
 orders_delete = WebhookSignal()
 orders_updated = WebhookSignal()

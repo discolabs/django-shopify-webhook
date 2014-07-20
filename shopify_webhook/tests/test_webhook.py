@@ -5,7 +5,7 @@ from django.conf import settings
 from django.dispatch import receiver
 from django.core.urlresolvers import reverse
 
-from ..signals import orders_create
+from ..signals import webhook_received, orders_create
 from ..helpers import get_hmac
 
 class WebhookViewTestCase(TestCase):
@@ -49,6 +49,18 @@ class WebhookViewTestCase(TestCase):
     def test_valid_hmac_is_ok(self):
         response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123})
         self.assertEqual(response.status_code, 200, 'POST orders/create request with valid HMAC returns 200 (OK).')
+
+    def test_webook_received_signal_triggered(self):
+        data = {'id': 123456}
+
+        # Create a test signal receiver for the generic webhook received signal.
+        @receiver(webhook_received)
+        def test_webhook_received_receiver(sender, data, **kwargs):
+            test_webhook_received_receiver.data = data
+        test_webhook_received_receiver.data = None
+
+        response = self.post_shopify_webhook(topic = 'fulfillments/update', data = data)
+        self.assertEqual(data, test_webhook_received_receiver.data, 'POST fulfillments/update correctly triggered webhook_received signal.')
 
     def test_order_created_signal_triggered(self):
         data = {'id': 123456}
