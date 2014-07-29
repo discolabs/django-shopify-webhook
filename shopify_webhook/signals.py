@@ -2,7 +2,9 @@ from django.dispatch import Signal
 
 
 class WebhookSignal(Signal):
-    """A class wrapping Signal with the common arguments for Webhooks."""
+    """
+    A class wrapping Signal with the common arguments for Webhooks.
+    """
 
     def __init__(self):
         providing_args = ['data']

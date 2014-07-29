@@ -1,5 +1,3 @@
-import logging
-
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -10,6 +8,10 @@ import signals
 
 
 class WebhookView(View):
+    """
+    A view to be used as the endpoint for webhook requests from Shopify.
+    Accepts only the POST method and utilises the @webook view decorator to validate the request.
+    """
 
     @method_decorator(csrf_exempt)
     @method_decorator(webhook)

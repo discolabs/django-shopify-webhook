@@ -8,7 +8,9 @@ from .helpers import hmac_is_valid, proxy_signature_is_valid
 
 
 def webhook(f):
-    """A decorator that checks and validates a Shopify Webhook request."""
+    """
+    A view decorator that checks and validates a Shopify Webhook request.
+    """
 
     @wraps(f)
     def wrapper(request, *args, **kwargs):
@@ -33,7 +35,9 @@ def webhook(f):
 
 
 def app_proxy(f):
-    """A decorator thats checks and validates a Shopify Application proxy request."""
+    """
+    A view decorator thats checks and validates a Shopify Application proxy request.
+    """
 
     @wraps(f)
     def wrapper(request, *args, **kwargs):
