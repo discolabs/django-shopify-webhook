@@ -1,9 +1,9 @@
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse, HttpResponseBadRequest
 
-from .decorators import webhook
+from .decorators import webhook, app_proxy
 import signals
 
 
@@ -27,3 +27,16 @@ class WebhookView(View):
 
         # All good, return a 200.
         return HttpResponse('OK')
+
+
+class LiquidTemplateView(TemplateView):
+    """
+    A view extending Django's base TemplateView that provides conveniences for returning a
+    liquid-templated view from an app proxy request.
+    """
+
+    content_type = 'application/liquid'
+
+    @method_decorator(app_proxy)
+    def dispatch(self, request, *args, **kwargs):
+        return super(LiquidTemplateView, self).dispatch(request, *args, **kwargs)
