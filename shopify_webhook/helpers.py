@@ -1,3 +1,4 @@
+from django.conf import settings
 import hashlib, base64, hmac
 
 
@@ -36,6 +37,12 @@ def proxy_signature_is_valid(request, secret):
     """
     Return true if the calculated signature matches that present in the query string of the given request.
     """
+
+    # Allow skipping of validation with an explicit setting.
+    # If setting not present, skip if in debug mode by default.
+    skip_validation = getattr(settings, 'SKIP_APP_PROXY_VALIDATION', settings.DEBUG)
+    if skip_validation:
+        return True
 
     # Create a mutable version of the GET parameters.
     query_dict = request.GET.copy()
