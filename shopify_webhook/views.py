@@ -35,7 +35,7 @@ class LiquidTemplateView(TemplateView):
     liquid-templated view from an app proxy request.
     """
 
-    content_type = 'application/liquid'
+    content_type = 'application/liquid; charset=utf-8'
 
     @method_decorator(app_proxy)
     def dispatch(self, request, *args, **kwargs):
