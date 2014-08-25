@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 version = __import__('shopify_webhook').__version__
 
@@ -20,13 +20,8 @@ setup(
         'shopify_webhook': 'shopify_webhook',
     },
 
-    requires = [
-        'django',
-        'shopify_auth',
-    ],
-
     install_requires = [
-        'django',
+        'django >=1.6.5, <1.7',
     ],
 
     zip_safe = True,

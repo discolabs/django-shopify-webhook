@@ -1,2 +1,6 @@
 .idea
 *.pyc
+MANIFEST
+build
+dist
+django_shopify_webhook.egg-info
