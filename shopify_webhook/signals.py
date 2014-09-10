@@ -7,7 +7,7 @@ class WebhookSignal(Signal):
     """
 
     def __init__(self):
-        providing_args = ['data']
+        providing_args = ['domain', 'data']
         super(WebhookSignal, self).__init__(providing_args = providing_args)
 
 

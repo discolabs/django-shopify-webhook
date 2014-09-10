@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse, HttpResponseBadRequest
 
 from .decorators import webhook, app_proxy
+from .helpers import get_signal_name_for_topic
 import signals
 
 
@@ -18,10 +19,10 @@ class WebhookView(View):
     def post(self, request, *args, **kwargs):
 
         # Convert the topic to a signal name and trigger it.
-        signal_name = request.webhook_topic.replace('/', '_')
+        signal_name = get_signal_name_for_topic(request.webhook_topic)
         try:
-            getattr(signals, signal_name).send_robust(self, data = request.webhook_data)
-            signals.webhook_received.send_robust(self, data = request.webhook_data)
+            getattr(signals, signal_name).send_robust(self, domain = request.webhook_domain, data = request.webhook_data)
+            signals.webhook_received.send_robust(self, domain = request.webhook_domain, data = request.webhook_data)
         except AttributeError:
             return HttpResponseBadRequest()
 

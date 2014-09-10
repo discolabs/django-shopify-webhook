@@ -2,6 +2,13 @@ from django.conf import settings
 import hashlib, base64, hmac
 
 
+def get_signal_name_for_topic(webhook_topic):
+    """
+    Convert a Shopify Webhook topic (eg "orders/create") to the equivalent Pythonic method name (eg "orders_create").
+    """
+    return webhook_topic.replace('/', '_')
+
+
 def get_hmac(body, secret):
     """
     Calculate the HMAC value of the given request body and secret as per Shopify's documentation for Webhook requests.

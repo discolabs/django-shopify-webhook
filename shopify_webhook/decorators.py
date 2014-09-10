@@ -16,9 +16,10 @@ def webhook(f):
     def wrapper(request, *args, **kwargs):
         # Try to get required headers and decode the body of the request.
         try:
-            topic = request.META['HTTP_X_SHOPIFY_TOPIC']
-            hmac  = request.META['HTTP_X_SHOPIFY_HMAC_SHA256'] if 'HTTP_X_SHOPIFY_HMAC_SHA256' in request.META else None
-            data  = json.loads(request.body)
+            topic   = request.META['HTTP_X_SHOPIFY_TOPIC']
+            hmac    = request.META['HTTP_X_SHOPIFY_HMAC_SHA256'] if 'HTTP_X_SHOPIFY_HMAC_SHA256' in request.META else None
+            domain  = request.META['HTTP_X_SHOPIFY_SHOP_DOMAIN'] if 'HTTP_X_SHOPIFY_SHOP_DOMAIN' in request.META else None
+            data    = json.loads(request.body)
         except:
             return HttpResponseBadRequest()
 
@@ -27,8 +28,9 @@ def webhook(f):
             return HttpResponseForbidden()
 
         # Otherwise, set properties on the request object and return.
-        request.webhook_topic = topic
-        request.webhook_data  = data
+        request.webhook_topic   = topic
+        request.webhook_data    = data
+        request.webhook_domain  = domain
         return f(request, args, kwargs)
 
     return wrapper
