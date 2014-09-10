@@ -26,6 +26,10 @@ class WebhookViewTestCase(AbstractWebhookTestCase):
         response = self.post_shopify_webhook(topic = 'tests/invalid', data = {'id': 123})
         self.assertEqual(response.status_code, 400, 'POST tests/invalid request with valid HMAC returns 400 (Bad Request).')
 
+    def test_missing_domain_is_bad_request(self):
+        response = self.post_shopify_webhook(topic = 'orders/create', domain = '', data = {'id': 123})
+        self.assertEqual(response.status_code, 400, 'POST orders/create request with missing domain returns 400 (Bad Request).')
+
     def test_valid_hmac_is_ok(self):
         response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123})
         self.assertEqual(response.status_code, 200, 'POST orders/create request with valid HMAC returns 200 (OK).')

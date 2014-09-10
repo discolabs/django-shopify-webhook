@@ -9,6 +9,15 @@ def get_signal_name_for_topic(webhook_topic):
     return webhook_topic.replace('/', '_')
 
 
+def domain_is_valid(domain):
+    """
+    Check whether the given domain is a valid source for webhook request.
+    """
+    if domain is None:
+        return False
+    return len(domain) > 0
+
+
 def get_hmac(body, secret):
     """
     Calculate the HMAC value of the given request body and secret as per Shopify's documentation for Webhook requests.

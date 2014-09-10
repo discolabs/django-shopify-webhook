@@ -14,17 +14,20 @@ class AbstractWebhookTestCase(TestCase):
         super(AbstractWebhookTestCase, self).setUp()
         self.webhook_url = reverse('webhook')
 
-    def post_shopify_webhook(self, topic = None, data = None, headers = None, send_hmac = True):
-        # Set headers.
-        headers = {} if headers is None else headers
-
+    def post_shopify_webhook(self, topic = None, domain = None, data = None, headers = None, send_hmac = True):
+        # Ensure data is a JSON-encoded string.
         if isinstance(data, dict):
             data = json.dumps(data)
         elif data is None or not isinstance(data, basestring):
             data = '{}'
 
-        # Add common headers.
+        # Set defaults.
+        headers = {} if headers is None else headers
+        domain = domain if domain is not None else 'test.myshopify.com'
+
+        # Add required headers.
         headers['HTTP_X_SHOPIFY_TEST'] = 'true'
+        headers['HTTP_X_SHOPIFY_SHOP_DOMAIN'] = domain
 
         # Add optional headers.
         if topic:
