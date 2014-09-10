@@ -1,4 +1,5 @@
-import os, sys
+import sys
+import django
 from django.conf import settings
 
 settings.configure(
@@ -8,16 +9,21 @@ settings.configure(
             'ENGINE': 'django.db.backends.sqlite3',
         }
     },
-    ROOT_URLCONF = 'shopify_webhook.urls',
     INSTALLED_APPS = (
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
         'shopify_webhook',
     ),
-    SHOPIFY_APP_API_SECRET = 'hush'
+    MIDDLEWARE_CLASSES = (),
+    ROOT_URLCONF = 'shopify_webhook.urls',
+    SHOPIFY_APP_API_SECRET = 'hush',
 )
+
+django.setup()
 
 from django.test.runner import DiscoverRunner
 
-test_runner = DiscoverRunner(verbosity = 3)
+test_runner = DiscoverRunner()
 failures = test_runner.run_tests(['shopify_webhook'])
 if failures:
     sys.exit(failures)

@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 version = __import__('shopify_webhook').__version__
 
@@ -12,16 +12,10 @@ setup(
     url = 'https://github.com/discolabs/django-shopify-webhook',
     license = 'None',
 
-    packages = [
-        'shopify_webhook',
-    ],
-
-    package_dir = {
-        'shopify_webhook': 'shopify_webhook',
-    },
+    packages = find_packages(),
 
     install_requires = [
-        'django >=1.6.5, <1.7',
+        'django >=1.7',
     ],
 
     zip_safe = True,

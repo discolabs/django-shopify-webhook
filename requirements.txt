@@ -1,2 +1,2 @@
-django >=1.6.5, <1.7
+django >=1.7
 setuptools >=5.7
