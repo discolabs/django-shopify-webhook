@@ -2,6 +2,7 @@ from django.views.generic import View, TemplateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse, HttpResponseBadRequest
+from django.conf import settings
 
 from .decorators import webhook, app_proxy
 from .helpers import get_signal_name_for_topic
@@ -36,7 +37,7 @@ class LiquidTemplateView(TemplateView):
     liquid-templated view from an app proxy request.
     """
 
-    content_type = 'application/liquid; charset=utf-8'
+    content_type = getattr(settings, 'LIQUID_TEMPLATE_CONTENT_TYPE', 'application/liquid; charset=utf-8')
 
     @method_decorator(app_proxy)
     def dispatch(self, request, *args, **kwargs):
