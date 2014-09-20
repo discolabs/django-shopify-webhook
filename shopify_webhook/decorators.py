@@ -35,7 +35,7 @@ def webhook(f):
         request.webhook_topic   = topic
         request.webhook_data    = data
         request.webhook_domain  = domain
-        return f(request, args, kwargs)
+        return f(request, *args, **kwargs)
 
     return wrapper
 
@@ -52,6 +52,6 @@ def app_proxy(f):
         if not proxy_signature_is_valid(request, settings.SHOPIFY_APP_API_SECRET):
             return HttpResponseBadRequest()
 
-        return f(request, args, kwargs)
+        return f(request, *args, **kwargs)
 
     return wrapper
