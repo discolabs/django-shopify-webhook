@@ -12,12 +12,22 @@ import signals
 class WebhookView(View):
     """
     A view to be used as the endpoint for webhook requests from Shopify.
-    Accepts only the POST method and utilises the @webook view decorator to validate the request.
+    Accepts only the POST method and utilises the @webhook view decorator to validate the request.
     """
-
+    
     @method_decorator(csrf_exempt)
-    @method_decorator(webhook)
+    @method_decorator(webhook)    
+    def dispatch(self, request, *args, **kwargs):
+        """
+        The dispatch() method simply calls the parent dispatch method, but is required as method decorators need to be
+        applied to the dispatch() method rather than to individual HTTP verb methods (eg post()).
+        """
+        return super(WebhookView, self).dispatch(request, *args, **kwargs)
+        
     def post(self, request, *args, **kwargs):
+        """
+        Receive a webhook POST request.
+        """
 
         # Convert the topic to a signal name and trigger it.
         signal_name = get_signal_name_for_topic(request.webhook_topic)

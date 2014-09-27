@@ -1,10 +1,10 @@
 from django.dispatch import receiver
 
 from ..signals import webhook_received, orders_create
-from . import AbstractWebhookTestCase
+from . import WebhookTestCase
 
 
-class WebhookViewTestCase(AbstractWebhookTestCase):
+class WebhookViewTestCase(WebhookTestCase):
 
     def test_get_method_not_allowed(self):
         response = self.client.get(self.webhook_url)

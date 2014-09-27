@@ -15,7 +15,7 @@ settings.configure(
         'shopify_webhook',
     ),
     MIDDLEWARE_CLASSES = (),
-    ROOT_URLCONF = 'shopify_webhook.urls',
+    ROOT_URLCONF = 'shopify_webhook.tests.urls',
     SHOPIFY_APP_API_SECRET = 'hush',
 )
 

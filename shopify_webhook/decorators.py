@@ -1,10 +1,14 @@
 import json
 from functools import wraps
 
-from django.http import HttpResponseBadRequest, HttpResponseForbidden
+from django.http import HttpResponseBadRequest, HttpResponseForbidden, HttpResponse
 from django.conf import settings
 
 from .helpers import domain_is_valid, hmac_is_valid, proxy_signature_is_valid
+
+
+class HttpResponseMethodNotAllowed(HttpResponse):
+    status_code = 405
 
 
 def webhook(f):
@@ -14,6 +18,10 @@ def webhook(f):
 
     @wraps(f)
     def wrapper(request, *args, **kwargs):
+        # Ensure the request is a POST request.
+        if request.method != 'POST':
+            return HttpResponseMethodNotAllowed()
+        
         # Try to get required headers and decode the body of the request.
         try:
             topic   = request.META['HTTP_X_SHOPIFY_TOPIC']
