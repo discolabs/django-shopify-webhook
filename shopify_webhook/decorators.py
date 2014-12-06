@@ -28,7 +28,7 @@ def webhook(f):
             domain  = request.META['HTTP_X_SHOPIFY_SHOP_DOMAIN']
             hmac    = request.META['HTTP_X_SHOPIFY_HMAC_SHA256'] if 'HTTP_X_SHOPIFY_HMAC_SHA256' in request.META else None
             data    = json.loads(request.body)
-        except:
+        except (KeyError, ValueError) as e:
             return HttpResponseBadRequest()
 
         # Verify the domain.
@@ -64,7 +64,7 @@ def carrier_request(f):
             domain  = request.META['HTTP_X_SHOPIFY_SHOP_DOMAIN']
             hmac    = request.META['HTTP_X_SHOPIFY_HMAC_SHA256'] if 'HTTP_X_SHOPIFY_HMAC_SHA256' in request.META else None
             data    = json.loads(request.body)
-        except:
+        except (KeyError, ValueError) as e:
             return HttpResponseBadRequest()
 
         # Verify the domain.
