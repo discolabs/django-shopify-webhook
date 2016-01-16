@@ -6,7 +6,7 @@ setup(
     name = 'django-shopify-webhook',
     version = version,
     description = 'A package for the creation of Shopify Apps using the Embedded App SDK.',
-    long_description = open('README.rst').read(),
+    long_description = open('README.md').read(),
     author = 'Gavin Ballard',
     author_email = 'gavin@discolabs.com',
     url = 'https://github.com/discolabs/django-shopify-webhook',
