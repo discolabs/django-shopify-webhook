@@ -6,7 +6,7 @@ from django.conf import settings
 
 from .decorators import webhook, app_proxy
 from .helpers import get_signal_name_for_topic
-import signals
+from . import signals
 
 
 class WebhookView(View):

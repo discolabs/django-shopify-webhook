@@ -23,7 +23,7 @@ def get_hmac(body, secret):
     Calculate the HMAC value of the given request body and secret as per Shopify's documentation for Webhook requests.
     See: http://docs.shopify.com/api/tutorials/using-webhooks#verify-webhook
     """
-    hash = hmac.new(secret, body, hashlib.sha256)
+    hash = hmac.new(secret.encode('utf-8'), body, hashlib.sha256)
     return base64.b64encode(hash.digest())
 
 
@@ -45,7 +45,7 @@ def get_proxy_signature(query_dict, secret):
     for key in sorted(query_dict.keys()):
         sorted_params += "{0}={1}".format(key, ",".join(query_dict.getlist(key)))
 
-    signature = hmac.new(secret, sorted_params, hashlib.sha256)
+    signature = hmac.new(secret.encode('utf-8'), sorted_params.encode('utf-8'), hashlib.sha256)
     return signature.hexdigest()
 
 
@@ -74,6 +74,6 @@ def proxy_signature_is_valid(request, secret):
     # Try to use compare_digest() to reduce vulnerability to timing attacks.
     # If it's not available, just fall back to regular string comparison.
     try:
-        return hmac.compare_digest(calculated_signature, signature_to_verify)
+        return hmac.compare_digest(calculated_signature.encode('utf-8'), signature_to_verify.encode('utf-8'))
     except AttributeError:
         return calculated_signature == signature_to_verify
