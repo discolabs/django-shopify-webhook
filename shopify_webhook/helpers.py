@@ -31,7 +31,7 @@ def hmac_is_valid(body, secret, hmac_to_verify):
     """
     Return True if the given hmac_to_verify matches that calculated from the given body and secret.
     """
-    return get_hmac(body, secret) == hmac_to_verify
+    return get_hmac(body, secret) == hmac_to_verify.encode('utf-8')
 
 
 def get_proxy_signature(query_dict, secret):
