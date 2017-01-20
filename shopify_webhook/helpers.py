@@ -24,7 +24,7 @@ def get_hmac(body, secret):
     See: http://docs.shopify.com/api/tutorials/using-webhooks#verify-webhook
     """
     hash = hmac.new(secret.encode('utf-8'), body, hashlib.sha256)
-    return base64.b64encode(hash.digest())
+    return base64.b64encode(hash.digest()).decode()
 
 
 def hmac_is_valid(body, secret, hmac_to_verify):
