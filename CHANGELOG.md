@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 No unreleased changes.
 
+## 0.3.1 - 2017-01-20
+### Changed
+- Fix for Python 3.6 string compatibility
+
 ## 0.3.0 - 2016-02-10
 ### Changed
 - Better Python2/3 compatibility
