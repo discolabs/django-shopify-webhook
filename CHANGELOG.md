@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 No unreleased changes.
 
+## 0.4.0 - 2018-05-31
+## Changed
+- Add support for Django 2
+- Drop test matrix support for older versions
+
 ## 0.3.1 - 2017-01-20
 ### Changed
 - Fix for Python 3.6 string compatibility
