@@ -42,7 +42,7 @@ class WebhookTestCase(TestCase):
         if topic:
             headers['HTTP_X_SHOPIFY_TOPIC'] = topic
         if send_hmac:
-            headers['HTTP_X_SHOPIFY_HMAC_SHA256'] = six.text_type(get_hmac(six.b(data), settings.SHOPIFY_APP_API_SECRET))
+            headers['HTTP_X_SHOPIFY_HMAC_SHA256'] = six.text_type(get_hmac(six.b(data), settings.SHOPIFY_WEBHOOK_SECRET))
 
         return self.client.post(self.webhook_url, data = data, content_type = 'application/json', **headers)
 

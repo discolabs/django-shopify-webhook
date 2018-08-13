@@ -16,7 +16,7 @@ settings.configure(
     ),
     MIDDLEWARE_CLASSES = (),
     ROOT_URLCONF = 'shopify_webhook.tests.urls',
-    SHOPIFY_APP_API_SECRET = 'hush',
+    SHOPIFY_WEBHOOK_SECRET ='hush',
 )
 
 django.setup()
