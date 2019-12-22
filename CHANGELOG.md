@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 No unreleased changes.
+
+## 0.5.0 - 2019-12-23
 - Drop support for Python 2
 - Update test matrix
 
