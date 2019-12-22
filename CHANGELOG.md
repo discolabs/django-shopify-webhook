@@ -4,12 +4,17 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 No unreleased changes.
 
+## 0.5.1 - 2019-12-23
+### Changed
+- Fixed long description for package upload
+
 ## 0.5.0 - 2019-12-23
+### Changed
 - Drop support for Python 2
 - Update test matrix
 
 ## 0.4.0 - 2018-05-31
-## Changed
+### Changed
 - Add support for Django 2
 - Drop test matrix support for older versions
 
