@@ -4,7 +4,6 @@ import json
 from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
-from django.utils import six
 
 from ..helpers import get_hmac
 
@@ -42,7 +41,7 @@ class WebhookTestCase(TestCase):
         if topic:
             headers['HTTP_X_SHOPIFY_TOPIC'] = topic
         if send_hmac:
-            headers['HTTP_X_SHOPIFY_HMAC_SHA256'] = six.text_type(get_hmac(six.b(data), settings.SHOPIFY_APP_API_SECRET))
+            headers['HTTP_X_SHOPIFY_HMAC_SHA256'] = str(get_hmac(data.encode("latin-1"), settings.SHOPIFY_APP_API_SECRET))
 
         return self.client.post(self.webhook_url, data = data, content_type = 'application/json', **headers)
 
