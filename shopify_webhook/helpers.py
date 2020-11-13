@@ -77,3 +77,8 @@ def proxy_signature_is_valid(request, secret):
         return hmac.compare_digest(calculated_signature.encode('utf-8'), signature_to_verify.encode('utf-8'))
     except AttributeError:
         return calculated_signature == signature_to_verify
+
+
+def get_secret(request, *args, **kwargs):
+    return settings.SHOPIFY_APP_API_SECRET
+

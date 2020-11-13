@@ -1,27 +1,30 @@
 import json
-from functools import wraps
+from functools import wraps, partial
 
 from django.http import HttpResponseBadRequest, HttpResponseForbidden, HttpResponse
 from django.conf import settings
 
-from .helpers import domain_is_valid, hmac_is_valid, proxy_signature_is_valid
+from .helpers import domain_is_valid, hmac_is_valid, proxy_signature_is_valid, get_secret
 
 
 class HttpResponseMethodNotAllowed(HttpResponse):
     status_code = 405
 
 
-def webhook(f):
+def webhook(f=None, get_secret_func=None):
     """
     A view decorator that checks and validates a Shopify Webhook request.
     """
+    if f is None:
+        return partial(webhook, get_secret_func=get_secret_func)
+    get_secret_func = get_secret_func if get_secret_func else get_secret
 
     @wraps(f)
     def wrapper(request, *args, **kwargs):
         # Ensure the request is a POST request.
         if request.method != 'POST':
             return HttpResponseMethodNotAllowed()
-        
+
         # Try to get required headers and decode the body of the request.
         try:
             topic   = request.META['HTTP_X_SHOPIFY_TOPIC']
@@ -36,7 +39,7 @@ def webhook(f):
             return HttpResponseBadRequest()
 
         # Verify the HMAC.
-        if not hmac_is_valid(request.body, settings.SHOPIFY_APP_API_SECRET, hmac):
+        if not hmac_is_valid(request.body, get_secret_func(request, *args, **kwargs), hmac):
             return HttpResponseForbidden()
 
         # Otherwise, set properties on the request object and return.
