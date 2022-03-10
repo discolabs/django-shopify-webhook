@@ -10,6 +10,9 @@ from .helpers import domain_is_valid, hmac_is_valid, proxy_signature_is_valid
 class HttpResponseMethodNotAllowed(HttpResponse):
     status_code = 405
 
+class HttpResponseUnauthorized(HttpResponse):
+    status_code = 401
+
 
 def webhook(f):
     """
@@ -37,7 +40,7 @@ def webhook(f):
 
         # Verify the HMAC.
         if not hmac_is_valid(request.body, settings.SHOPIFY_APP_API_SECRET, hmac):
-            return HttpResponseForbidden()
+            return HttpResponseUnauthorized()
 
         # Otherwise, set properties on the request object and return.
         request.webhook_topic   = topic
