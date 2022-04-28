@@ -2,7 +2,7 @@ Django Shopify Webhook
 ======================
 
 [![PyPI version](https://badge.fury.io/py/django-shopify-webhook.svg)](http://badge.fury.io/py/django-shopify-webhook)
-[![Build Status](https://travis-ci.org/discolabs/django-shopify-webhook.svg?branch=master)](https://travis-ci.org/discolabs/django-shopify-webhook)
+[![Tests](https://github.com/discolabs/django-shopify-webhook/actions/workflows/ci.yml/badge.svg)](https://github.com/discolabs/django-shopify-webhook/actions/workflows/ci.yml)
 
 This Django package aims to make it easy to add webhook-handling behaviour into
 your Django app. It provides:

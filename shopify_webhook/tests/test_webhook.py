@@ -16,11 +16,11 @@ class WebhookViewTestCase(WebhookTestCase):
 
     def test_no_hmac_is_forbidden(self):
         response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123}, send_hmac = False)
-        self.assertEqual(response.status_code, 403, 'POST orders/create request with no HMAC returns 403 (Forbidden).')
+        self.assertEqual(response.status_code, 401, 'POST orders/create request with no HMAC returns 401 (Forbidden).')
 
     def test_invalid_hmac_is_forbidden(self):
         response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123}, headers = {'HTTP_X_SHOPIFY_HMAC_SHA256': 'invalid'}, send_hmac = False)
-        self.assertEqual(response.status_code, 403, 'POST orders/create request with invalid HMAC returns 403 (Forbidden).')
+        self.assertEqual(response.status_code, 401, 'POST orders/create request with invalid HMAC returns 401 (Forbidden).')
 
     def test_unknown_topic_is_bad_request(self):
         response = self.post_shopify_webhook(topic = 'tests/invalid', data = {'id': 123})
