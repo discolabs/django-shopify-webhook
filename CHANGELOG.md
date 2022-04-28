@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-No unreleased changes.
+- Add support for Django 4
 
 ## 0.5.1 - 2019-12-23
 ### Changed
