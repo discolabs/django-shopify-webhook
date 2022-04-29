@@ -17,7 +17,7 @@ setup(
 
     install_requires = [
         'django >=2.2',
-        'setuptools >= 5.7'
+        'setuptools >=5.7'
     ],
 
     zip_safe = True,
