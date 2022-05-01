@@ -16,7 +16,8 @@ setup(
     packages = find_packages(),
 
     install_requires = [
-        'django >=1.7',
+        'django >=2.2',
+        'setuptools >=5.7'
     ],
 
     zip_safe = True,
