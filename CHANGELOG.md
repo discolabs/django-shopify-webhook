@@ -2,7 +2,17 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+No unreleased changes.
+
+## 0.6.0 - 2022-05-08
+### Added
 - Add support for Django 4
+
+### Changed
+- Update hmac not valid status code
+
+### Removed
+- Signals: remove deprecated provided_args argument
 
 ## 0.5.1 - 2019-12-23
 ### Changed
