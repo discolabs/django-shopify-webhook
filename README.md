@@ -16,6 +16,4 @@ your Django app. It provides:
 - A number of `WebhookSignal`s that can be listened to and handled by your
   application.
 
-**Note:** This package is no longer actively developed and I'm unable to provide
-support for it. I am happy to review and accept pull requests from anyone who's
-using it in their own applications.
+This packaged is maintained by [Josef Rousek](https://rousek.name/) from [Digismoothie](https://digismoothie.com/) and yes, we're hiring.
