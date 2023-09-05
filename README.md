@@ -16,4 +16,4 @@ your Django app. It provides:
 - A number of `WebhookSignal`s that can be listened to and handled by your
   application.
 
-This packaged is maintained by [Josef Rousek](https://rousek.name/) from [Digismoothie](https://digismoothie.com/) and yes, we're hiring.
+This packaged is maintained by [Josef Rousek](https://rousek.name/).
