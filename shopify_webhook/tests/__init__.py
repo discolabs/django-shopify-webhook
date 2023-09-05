@@ -21,7 +21,7 @@ class WebhookTestCase(TestCase):
         super(WebhookTestCase, self).setUp()
         self.webhook_url = reverse('webhook')
 
-    def post_shopify_webhook(self, topic = None, domain = None, data = None, headers = None, send_hmac = True):
+    def post_shopify_webhook(self, topic = None, domain = None, data = None, webhook_id = None, headers = None, send_hmac = True):
         """
         Simulate a webhook being sent to the application's webhook endpoint with the provided parameters.
         """
@@ -42,6 +42,8 @@ class WebhookTestCase(TestCase):
             headers['HTTP_X_SHOPIFY_TOPIC'] = topic
         if send_hmac:
             headers['HTTP_X_SHOPIFY_HMAC_SHA256'] = str(get_hmac(data.encode("latin-1"), settings.SHOPIFY_APP_API_SECRET))
+        if webhook_id:
+            headers['HTTP_X_SHOPIFY_WEBHOOK_ID'] = webhook_id
 
         return self.client.post(self.webhook_url, data = data, content_type = 'application/json', **headers)
 

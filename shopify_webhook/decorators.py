@@ -30,6 +30,7 @@ def webhook(f):
             topic   = request.META['HTTP_X_SHOPIFY_TOPIC']
             domain  = request.META['HTTP_X_SHOPIFY_SHOP_DOMAIN']
             hmac    = request.META['HTTP_X_SHOPIFY_HMAC_SHA256'] if 'HTTP_X_SHOPIFY_HMAC_SHA256' in request.META else None
+            webhook_id = request.META['HTTP_X_SHOPIFY_WEBHOOK_ID']
             data    = json.loads(request.body.decode('utf-8'))
         except (KeyError, ValueError) as e:
             return HttpResponseBadRequest()
@@ -46,6 +47,7 @@ def webhook(f):
         request.webhook_topic   = topic
         request.webhook_data    = data
         request.webhook_domain  = domain
+        request.webhook_id      = webhook_id
         return f(request, *args, **kwargs)
 
     return wrapper

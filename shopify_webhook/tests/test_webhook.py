@@ -15,23 +15,23 @@ class WebhookViewTestCase(WebhookTestCase):
         self.assertEqual(response.status_code, 400, 'Empty POST request returns 400 (Bad Request).')
 
     def test_no_hmac_is_forbidden(self):
-        response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123}, send_hmac = False)
+        response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123}, webhook_id = 'b54557e4-bdd9-4b37-8a5f-bf7d70bcd043', send_hmac = False)
         self.assertEqual(response.status_code, 401, 'POST orders/create request with no HMAC returns 401 (Forbidden).')
 
     def test_invalid_hmac_is_forbidden(self):
-        response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123}, headers = {'HTTP_X_SHOPIFY_HMAC_SHA256': 'invalid'}, send_hmac = False)
+        response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123}, webhook_id = 'b54557e4-bdd9-4b37-8a5f-bf7d70bcd043', headers = {'HTTP_X_SHOPIFY_HMAC_SHA256': 'invalid'}, send_hmac = False)
         self.assertEqual(response.status_code, 401, 'POST orders/create request with invalid HMAC returns 401 (Forbidden).')
 
     def test_unknown_topic_is_bad_request(self):
-        response = self.post_shopify_webhook(topic = 'tests/invalid', data = {'id': 123})
+        response = self.post_shopify_webhook(topic = 'tests/invalid', data = {'id': 123}, webhook_id = 'b54557e4-bdd9-4b37-8a5f-bf7d70bcd043')
         self.assertEqual(response.status_code, 400, 'POST tests/invalid request with valid HMAC returns 400 (Bad Request).')
 
     def test_missing_domain_is_bad_request(self):
-        response = self.post_shopify_webhook(topic = 'orders/create', domain = '', data = {'id': 123})
+        response = self.post_shopify_webhook(topic = 'orders/create', domain = '', data = {'id': 123}, webhook_id = 'b54557e4-bdd9-4b37-8a5f-bf7d70bcd043')
         self.assertEqual(response.status_code, 400, 'POST orders/create request with missing domain returns 400 (Bad Request).')
 
     def test_valid_hmac_is_ok(self):
-        response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123})
+        response = self.post_shopify_webhook(topic = 'orders/create', data = {'id': 123}, webhook_id = 'b54557e4-bdd9-4b37-8a5f-bf7d70bcd043')
         self.assertEqual(response.status_code, 200, 'POST orders/create request with valid HMAC returns 200 (OK).')
 
     def test_webook_received_signal_triggered(self):
@@ -43,7 +43,7 @@ class WebhookViewTestCase(WebhookTestCase):
             test_webhook_received_receiver.data = data
         test_webhook_received_receiver.data = None
 
-        response = self.post_shopify_webhook(topic = 'fulfillments/update', data = data)
+        response = self.post_shopify_webhook(topic = 'fulfillments/update', data = data, webhook_id = 'b54557e4-bdd9-4b37-8a5f-bf7d70bcd043')
         self.assertEqual(data, test_webhook_received_receiver.data, 'POST fulfillments/update correctly triggered webhook_received signal.')
 
     def test_order_created_signal_triggered(self):
@@ -55,5 +55,5 @@ class WebhookViewTestCase(WebhookTestCase):
             test_order_create_receiver.data = data
         test_order_create_receiver.data = None
 
-        response = self.post_shopify_webhook(topic = 'orders/create', data = data)
+        response = self.post_shopify_webhook(topic = 'orders/create', data = data, webhook_id = 'b54557e4-bdd9-4b37-8a5f-bf7d70bcd043')
         self.assertEqual(data, test_order_create_receiver.data, 'POST orders/create correctly triggered order_created signal.')

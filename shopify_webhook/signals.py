@@ -8,6 +8,7 @@ class WebhookSignal(Signal):
         * domain
         * topic
         * data
+        * webhook_id
     """
     pass
 
