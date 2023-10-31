@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-- Add Webhook ID argument to signals (allow to fix #13)
+No unreleased changes.
+
+## 0.7.0 - 2023-10-31
+### Added
+- Add Webhook ID argument to signals (Fixes #13)
 
 ## 0.6.0 - 2022-05-08
 ### Added
